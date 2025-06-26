@@ -4,7 +4,7 @@ Plugin Name: WP Force Password Reset
 Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 GitHub Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 Description: Adding a user field that when set to true, forces the user to reset their password the next time they log in.
-Version: 1.8.0
+Version: 1.8.1
 Author: Callabridge
 Author URI: https://callabridge.com/
 */
@@ -15,28 +15,28 @@ require_once dirname(__FILE__) . '/plugin-update-checker/plugin-update-checker.p
 // Set up the updater
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
-$myUpdateChecker = PucFactory::buildUpdateChecker(
+$wpfprUpdateChecker = PucFactory::buildUpdateChecker(
     'https://github.com/rynecallahan019/wp-force-password-reset/',
     __FILE__,
     'wp-force-password-reset'
 );
 
 // Set the branch that contains the stable release
-$myUpdateChecker->setBranch('main');
+$wpfprUpdateChecker->setBranch('main');
 
 // Enable GitHub release asset updates
-$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+$wpfprUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 function create_force_password_reset_field() {
     if( function_exists('acf_add_local_field_group') ):
 
         acf_add_local_field_group(array(
             'key' => 'group_force_password_reset',
-            'title' => 'Force Password Reset',
+            'title' => 'WP Force Password Reset',
             'fields' => array(
                 array(
                     'key' => 'field_force_password_reset',
-                    'label' => 'Force Password Reset',
+                    'label' => 'WP Force Password Reset',
                     'name' => 'force_password_reset',
                     'type' => 'true_false',
                     'instructions' => 'Check to force the user to reset their password.',
@@ -61,8 +61,8 @@ add_action('acf/init', 'create_force_password_reset_field');
 // Add menu item under Settings
 function frp_add_options_page() {
     add_options_page(
-        'Force Reset Password Settings',
-        'Force Reset Password',
+        'WP Force Reset Password Settings',
+        'WP Force Reset Password',
         'manage_options',
         'force-reset-password',
         'frp_render_options_page'
@@ -75,100 +75,446 @@ function frp_register_settings() {
     register_setting('frp_options', 'frp_enable_2fa');
     register_setting('frp_options', 'frp_modal_heading');
     register_setting('frp_options', 'frp_modal_description');
+    register_setting('frp_options', 'frp_accent_color');
 }
 add_action('admin_init', 'frp_register_settings');
 
 // Render the options page
 function frp_render_options_page() {
+    $accent_color = get_option('frp_accent_color', '#3b82f6');
     ?>
-    <div class="wrap">
-        <h1>Force Reset Password Settings</h1>
-        <form method="post" action="options.php">
-            <?php
-            settings_fields('frp_options');
-            do_settings_sections('frp_options');
-            ?>
-            <table class="form-table">
-                <tr valign="top">
-                    <th scope="row">Modal Heading</th>
-                    <td>
-                        <input type="text" name="frp_modal_heading" value="<?php echo esc_attr(get_option('frp_modal_heading', 'Reset Your Password')); ?>" class="regular-text" />
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">Modal Description</th>
-                    <td>
-                        <textarea name="frp_modal_description" rows="3" class="large-text"><?php echo esc_textarea(get_option('frp_modal_description', '')); ?></textarea>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">Enable Two-Factor Authentication</th>
-                    <td>
-                        <input type="checkbox" name="frp_enable_2fa" value="1" <?php checked(1, get_option('frp_enable_2fa'), true); ?> />
-                    </td>
-                </tr>
-            </table>
-            <?php submit_button(); ?>
-        </form>
+    <div class="wrap frp-admin-wrap">
+        <h1 class="frp-main-title">WP Force Reset Password Settings</h1>
         
-        <div class="frp-admin-container">
-            <div class="frp-admin-section">
-                <h2>About This Plugin</h2>
-                <p>Force Reset Password enables administrators to require specific users to reset their passwords upon their next login. This feature enhances security by allowing you to enforce password changes when necessary.</p>
-                <h3>How It Works</h3>
-                <ol>
-                    <li>Navigate to the user's profile in the WordPress admin area.</li>
-                    <li>Locate the "Force Reset Password" field in the user settings.</li>
-                    <li>Toggle the option to enable the password reset requirement.</li>
-                    <li>The next time the user logs in, they will be prompted to reset their password.</li>
-                </ol>
+        <div class="frp-settings-container">
+            <div class="frp-settings-main">
+                <div class="frp-card">
+                    <h2 class="frp-card-title">Configuration Settings</h2>
+                    <form method="post" action="options.php" class="frp-form">
+                        <?php
+                        settings_fields('frp_options');
+                        do_settings_sections('frp_options');
+                        ?>
+                        
+                        <div class="frp-form-grid">
+                            <div class="frp-form-group">
+                                <label for="frp_modal_heading" class="frp-form-label">
+                                    <span class="frp-label-text">Modal Heading</span>
+                                    <span class="frp-label-description">The title displayed in the password reset modal</span>
+                                </label>
+                                <input type="text" 
+                                       id="frp_modal_heading" 
+                                       name="frp_modal_heading" 
+                                       value="<?php echo esc_attr(get_option('frp_modal_heading', 'Reset Your Password')); ?>" 
+                                       class="frp-form-input" 
+                                       placeholder="Reset Your Password" />
+                            </div>
+
+                            <div class="frp-form-group">
+                                <label for="frp_modal_description" class="frp-form-label">
+                                    <span class="frp-label-text">Modal Description</span>
+                                    <span class="frp-label-description">Additional text shown below the modal heading</span>
+                                </label>
+                                <textarea id="frp_modal_description" 
+                                          name="frp_modal_description" 
+                                          rows="3" 
+                                          class="frp-form-textarea"
+                                          placeholder="Enter optional description text..."><?php echo esc_textarea(get_option('frp_modal_description', '')); ?></textarea>
+                            </div>
+
+                            <div class="frp-form-group">
+                                <label for="frp_accent_color" class="frp-form-label">
+                                    <span class="frp-label-text">Accent Color</span>
+                                    <span class="frp-label-description">Primary color for buttons and form elements</span>
+                                </label>
+                                <div class="frp-color-input-wrapper">
+                                    <input type="color" 
+                                           id="frp_accent_color" 
+                                           name="frp_accent_color" 
+                                           value="<?php echo esc_attr($accent_color); ?>" 
+                                           class="frp-color-input" />
+                                    <input type="text" 
+                                           value="<?php echo esc_attr($accent_color); ?>" 
+                                           class="frp-color-text" 
+                                           readonly />
+                                </div>
+                            </div>
+
+                            <div class="frp-form-group frp-checkbox-group">
+                                <label for="frp_enable_2fa" class="frp-checkbox-label">
+                                    <input type="checkbox" 
+                                           id="frp_enable_2fa" 
+                                           name="frp_enable_2fa" 
+                                           value="1" 
+                                           <?php checked(1, get_option('frp_enable_2fa'), true); ?> 
+                                           class="frp-checkbox-input" />
+                                    <span class="frp-checkbox-custom"></span>
+                                    <div class="frp-checkbox-content">
+                                        <span class="frp-checkbox-title">Enable Two-Factor Authentication</span>
+                                        <span class="frp-checkbox-description">Require email verification before password reset</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="frp-form-actions">
+                            <?php submit_button('Save Settings', 'primary frp-submit-btn', 'submit', false); ?>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="frp-admin-section">
-                <h2>Usage Instructions</h2>
-                <p>To force a password reset for a user:</p>
-                <ol>
-                    <li>Go to Users > All Users in the WordPress admin menu.</li>
-                    <li>Click on the username to edit their profile.</li>
-                    <li>Scroll down to find the "Force Reset Password" option.</li>
-                    <li>Check the box to enable the forced password reset.</li>
-                    <li>Click "Update User" to save the changes.</li>
-                </ol>
+
+            <div class="frp-settings-sidebar">
+                <div class="frp-card">
+                    <h2 class="frp-card-title">About This Plugin</h2>
+                    <p class="frp-card-text">WP Force Reset Password enables administrators to require specific users to reset their passwords upon their next login. This feature enhances security by allowing you to enforce password changes when necessary.</p>
+                    
+                    <h3 class="frp-card-subtitle">How It Works</h3>
+                    <ol class="frp-ordered-list">
+                        <li>Navigate to the user's profile in the WordPress admin area.</li>
+                        <li>Locate the "WP Force Reset Password" field in the user settings.</li>
+                        <li>Toggle the option to enable the password reset requirement.</li>
+                        <li>The next time the user logs in, they will be prompted to reset their password.</li>
+                    </ol>
+                </div>
+
+                <div class="frp-card">
+                    <h2 class="frp-card-title">Usage Instructions</h2>
+                    <p class="frp-card-text">To force a password reset for a user:</p>
+                    <ol class="frp-ordered-list">
+                        <li>Go to Users > All Users in the WordPress admin menu.</li>
+                        <li>Click on the username to edit their profile.</li>
+                        <li>Scroll down to find the "WP Force Reset Password" option.</li>
+                        <li>Check the box to enable the forced password reset.</li>
+                        <li>Click "Update User" to save the changes.</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
     
     <style>
-        .frp-admin-container {
-            display: flex;
-            flex-wrap: wrap;
+        .frp-admin-wrap {
+            margin: 20px 20px 0 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+        }
+
+        .frp-main-title {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 0px solid <?php echo esc_attr($accent_color); ?>;
+            position: relative;
+        }
+
+        .frp-checkbox-label input[type=checkbox] {
+            display: none;
+        }
+
+        .frp-main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, <?php echo esc_attr($accent_color); ?>, <?php echo esc_attr($accent_color); ?>80);
+        }
+
+        .frp-settings-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
             gap: 2rem;
-            margin-top: 2rem;
+            max-width: 1400px;
         }
-        .frp-admin-section {
-            flex: 1;
-            min-width: 300px;
-            background: #fff;
-            padding: 1.5rem;
+
+        .frp-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .frp-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .frp-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0 0 1rem 0;
+            padding: 1.5rem 1.5rem 0 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 1rem;
+        }
+
+        .frp-card-subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #475569;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .frp-card-text {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .frp-settings-main .frp-card-title,
+        .frp-settings-main .frp-card-text,
+        .frp-settings-sidebar .frp-card-title,
+        .frp-settings-sidebar .frp-card-text,
+        .frp-settings-sidebar .frp-card-subtitle {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .frp-settings-sidebar .frp-card {
+            padding-bottom: 1.5rem;
+        }
+
+        .frp-form {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .frp-form-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .frp-form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .frp-form-label {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.5rem;
+        }
+
+        .frp-label-text {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .frp-label-description {
+            font-size: 0.75rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .frp-form-input,
+        .frp-form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 0.875rem;
+            color: #374151;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
         }
-        .frp-admin-section h2 {
-            color: #23282d;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+
+        .frp-form-input:focus,
+        .frp-form-textarea:focus {
+            outline: none;
+            border-color: <?php echo esc_attr($accent_color); ?>;
+            box-shadow: 0 0 0 3px <?php echo esc_attr($accent_color); ?>20;
         }
-        .frp-admin-section h3 {
-            color: #23282d;
+
+        .frp-form-textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
         }
-        .frp-admin-section p, .frp-admin-section li {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #444;
+
+        .frp-color-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
         }
-        .frp-admin-section ol {
-            padding-left: 20px;
+
+        .frp-color-input {
+            width: 50px;
+            height: 40px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .frp-color-input:hover {
+            border-color: <?php echo esc_attr($accent_color); ?>;
+        }
+
+        .frp-color-text {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: #6b7280;
+            background: #f9fafb;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        }
+
+        .frp-checkbox-group {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .frp-checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .frp-checkbox-input {
+            display: none;
+        }
+
+        .frp-checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .frp-checkbox-input:checked + .frp-checkbox-custom {
+            background: <?php echo esc_attr($accent_color); ?>;
+            border-color: <?php echo esc_attr($accent_color); ?>;
+        }
+
+        .frp-checkbox-input:checked + .frp-checkbox-custom::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .frp-checkbox-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .frp-checkbox-title {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .frp-checkbox-description {
+            font-size: 0.75rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .frp-form-actions {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .frp-submit-btn {
+            background: <?php echo esc_attr($accent_color); ?> !important;
+            border-color: <?php echo esc_attr($accent_color); ?> !important;
+            color: white !important;
+            padding: 0.75rem 2rem !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 0.875rem !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?>30 !important;
+        }
+
+        .frp-submit-btn:hover {
+            background: <?php echo esc_attr($accent_color); ?>dd !important;
+            border-color: <?php echo esc_attr($accent_color); ?>dd !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?>40 !important;
+        }
+
+        .frp-ordered-list {
+            padding-left: 1.5rem;
+            margin: 0;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .frp-ordered-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .frp-ordered-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .frp-settings-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .frp-admin-wrap {
+                margin: 10px 10px 0 0;
+            }
+
+            .frp-main-title {
+                font-size: 1.5rem;
+            }
+
+            .frp-card {
+                margin-bottom: 1rem;
+            }
+
+            .frp-color-input-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .frp-color-input {
+                width: 100%;
+            }
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorInput = document.getElementById('frp_accent_color');
+            const colorText = document.querySelector('.frp-color-text');
+            
+            colorInput.addEventListener('input', function() {
+                colorText.value = this.value;
+            });
+        });
+    </script>
     <?php
 }
 
@@ -177,10 +523,19 @@ function force_password_reset_modal() {
     $enable_2fa = get_option('frp_enable_2fa');
     $modal_heading = get_option('frp_modal_heading', 'Reset Your Password');
     $modal_description = get_option('frp_modal_description', '');
+    $accent_color = get_option('frp_accent_color', '#3b82f6');
 
     if ($user_id && get_field('force_password_reset', 'user_' . $user_id)) {
         ?>
         <style>
+            /* Dynamic accent color styles */
+            :root {
+                --frp-accent: <?php echo esc_attr($accent_color); ?>;
+                --frp-accent-hover: <?php echo esc_attr($accent_color); ?>dd;
+                --frp-accent-light: <?php echo esc_attr($accent_color); ?>20;
+                --frp-accent-shadow: <?php echo esc_attr($accent_color); ?>30;
+            }
+
             /* Modal Overlay */
             .frp-modal-overlay {
                 position: fixed;
@@ -272,6 +627,7 @@ function force_password_reset_modal() {
             
             .frp-form-input {
                 width: 100%;
+                height: 60px;
                 padding: 16px;
                 border: 2px solid #e5e7eb;
                 border-radius: 12px;
@@ -284,8 +640,8 @@ function force_password_reset_modal() {
             }
             
             .frp-form-input:focus {
-                border-color: #3b82f6;
-                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                border-color: var(--frp-accent);
+                box-shadow: 0 0 0 3px var(--frp-accent-light);
             }
             
             .frp-form-input.error {
@@ -315,8 +671,8 @@ function force_password_reset_modal() {
             }
             
             .frp-code-input:focus {
-                border-color: #3b82f6;
-                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                border-color: var(--frp-accent);
+                box-shadow: 0 0 0 3px var(--frp-accent-light);
                 transform: scale(1.05);
             }
             
@@ -420,14 +776,14 @@ function force_password_reset_modal() {
             }
             
             .frp-button-primary {
-                background: #3b82f6;
+                background: var(--frp-accent);
                 color: white;
             }
             
             .frp-button-primary:hover {
-                background: #2563eb;
+                background: var(--frp-accent-hover);
                 transform: translateY(-1px);
-                box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+                box-shadow: 0 8px 25px var(--frp-accent-shadow);
             }
             
             .frp-button-secondary {
