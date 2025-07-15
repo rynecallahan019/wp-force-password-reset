@@ -4,7 +4,7 @@ Plugin Name: WP Force Password Reset
 Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 GitHub Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 Description: Adding a user field that when set to true, forces the user to reset their password the next time they log in.
-Version: 1.9.1
+Version: 1.9.2
 Author: Callabridge
 Author URI: https://callabridge.com/
 */
@@ -195,314 +195,314 @@ function frp_render_options_page() {
     
     <style>
         .frp-admin-wrap {
-            margin: 20px 20px 0 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-        }
+    margin: 20px 20px 0 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
 
-        .frp-main-title {
-            color: #1e293b;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 0px solid <?php echo esc_attr($accent_color); ?>;
-            position: relative;
-        }
+.frp-main-title {
+    color: #1e293b;
+    font-size: 32px; /* 2rem = 32px */
+    font-weight: 700;
+    margin-bottom: 32px; /* 2rem = 32px */
+    padding-bottom: 16px; /* 1rem = 16px */
+    border-bottom: 0px solid <?php echo esc_attr($accent_color); ?>;
+    position: relative;
+}
 
-        .frp-checkbox-label input[type=checkbox] {
-            display: none;
-        }
+.frp-checkbox-label input[type=checkbox] {
+    display: none;
+}
 
-        .frp-main-title::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, <?php echo esc_attr($accent_color); ?>, <?php echo esc_attr($accent_color); ?>80);
-        }
+.frp-main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, <?php echo esc_attr($accent_color); ?>, <?php echo esc_attr($accent_color); ?>80);
+}
 
-        .frp-settings-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            max-width: 1400px;
-        }
+.frp-settings-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px; /* 2rem = 32px */
+    max-width: 1400px;
+}
 
-        .frp-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            transition: box-shadow 0.3s ease;
-        }
+.frp-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 24px; /* 1.5rem = 24px */
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
 
-        .frp-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+.frp-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
-        .frp-card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin: 0 0 1rem 0;
-            padding: 1.5rem 1.5rem 0 1.5rem;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 1rem;
-        }
+.frp-card-title {
+    font-size: 20px; /* 1.25rem = 20px */
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 16px 0; /* 1rem = 16px */
+    padding: 24px 24px 0 24px; /* 1.5rem = 24px */
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 16px; /* 1rem = 16px */
+}
 
-        .frp-card-subtitle {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #475569;
-            margin: 1.5rem 0 0.75rem 0;
-        }
+.frp-card-subtitle {
+    font-size: 16px; /* 1rem = 16px */
+    font-weight: 600;
+    color: #475569;
+    margin: 24px 0 12px 0; /* 1.5rem = 24px, 0.75rem = 12px */
+}
 
-        .frp-card-text {
-            color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
+.frp-card-text {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 16px; /* 1rem = 16px */
+}
 
-        .frp-settings-main .frp-card-title,
-        .frp-settings-main .frp-card-text,
-        .frp-settings-sidebar .frp-card-title,
-        .frp-settings-sidebar .frp-card-text,
-        .frp-settings-sidebar .frp-card-subtitle {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-        }
+.frp-settings-main .frp-card-title,
+.frp-settings-main .frp-card-text,
+.frp-settings-sidebar .frp-card-title,
+.frp-settings-sidebar .frp-card-text,
+.frp-settings-sidebar .frp-card-subtitle {
+    padding-left: 24px; /* 1.5rem = 24px */
+    padding-right: 24px; /* 1.5rem = 24px */
+}
 
-        .frp-settings-sidebar .frp-card {
-            padding-bottom: 1.5rem;
-        }
+.frp-settings-sidebar .frp-card {
+    padding-bottom: 24px; /* 1.5rem = 24px */
+}
 
-        .frp-form {
-            padding: 0 1.5rem 1.5rem 1.5rem;
-        }
+.frp-form {
+    padding: 0 24px 24px 24px; /* 1.5rem = 24px */
+}
 
-        .frp-form-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
+.frp-form-grid {
+    display: grid;
+    gap: 24px; /* 1.5rem = 24px */
+}
 
-        .frp-form-group {
-            display: flex;
-            flex-direction: column;
-        }
+.frp-form-group {
+    display: flex;
+    flex-direction: column;
+}
 
-        .frp-form-label {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 0.5rem;
-        }
+.frp-form-label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px; /* 0.5rem = 8px */
+}
 
-        .frp-label-text {
-            font-weight: 600;
-            color: #374151;
-            font-size: 14px;
-            margin-bottom: 0.25rem;
-        }
+.frp-label-text {
+    font-weight: 600;
+    color: #374151;
+    font-size: 14px;
+    margin-bottom: 4px; /* 0.25rem = 4px */
+}
 
-        .frp-label-description {
-            font-size: 0.75rem;
-            color: #6b7280;
-            line-height: 1.4;
-        }
+.frp-label-description {
+    font-size: 12px; /* 0.75rem = 12px */
+    color: #6b7280;
+    line-height: 1.4;
+}
 
-        .frp-form-input,
-        .frp-form-textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #374151;
-            background: #ffffff;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
-        }
+.frp-form-input,
+.frp-form-textarea {
+    width: 100%;
+    padding: 12px 16px; /* 0.75rem = 12px, 1rem = 16px */
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #374151;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
 
-        .frp-form-input:focus,
-        .frp-form-textarea:focus {
-            outline: none;
-            border-color: <?php echo esc_attr($accent_color); ?>;
-            box-shadow: 0 0 0 1px <?php echo esc_attr($accent_color); ?>20;
-        }
+.frp-form-input:focus,
+.frp-form-textarea:focus {
+    outline: none;
+    border-color: <?php echo esc_attr($accent_color); ?>;
+    box-shadow: 0 0 0 1px <?php echo esc_attr($accent_color); ?>20;
+}
 
-        .frp-form-textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-family: inherit;
-        }
+.frp-form-textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
 
-        .frp-color-input-wrapper {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-        }
+.frp-color-input-wrapper {
+    display: flex;
+    gap: 12px; /* 0.75rem = 12px */
+    align-items: center;
+}
 
-        .frp-color-input {
-            width: 50px;
-            height: 40px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
-        }
+.frp-color-input {
+    width: 50px;
+    height: 40px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
 
-        .frp-color-input:hover {
-            border-color: <?php echo esc_attr($accent_color); ?>;
-        }
+.frp-color-input:hover {
+    border-color: <?php echo esc_attr($accent_color); ?>;
+}
 
-        .frp-color-text {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #6b7280;
-            background: #f9fafb;
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-        }
+.frp-color-text {
+    flex: 1;
+    padding: 12px 16px; /* 0.75rem = 12px, 1rem = 16px */
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #6b7280;
+    background: #f9fafb;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
 
-        .frp-checkbox-group {
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
+.frp-checkbox-group {
+    padding: 16px; /* 1rem = 16px */
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
 
-        .frp-checkbox-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            cursor: pointer;
-            margin: 0;
-        }
+.frp-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px; /* 0.75rem = 12px */
+    cursor: pointer;
+    margin: 0;
+}
 
-        .frp-checkbox-input {
-            display: none;
-        }
+.frp-checkbox-input {
+    display: none;
+}
 
-        .frp-checkbox-custom {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #d1d5db;
-            border-radius: 4px;
-            background: #ffffff;
-            transition: all 0.2s ease;
-            position: relative;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-        }
+.frp-checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 2px; /* 0.125rem = 2px */
+}
 
-        .frp-checkbox-input:checked + .frp-checkbox-custom {
-            background: <?php echo esc_attr($accent_color); ?>;
-            border-color: <?php echo esc_attr($accent_color); ?>;
-        }
+.frp-checkbox-input:checked + .frp-checkbox-custom {
+    background: <?php echo esc_attr($accent_color); ?>;
+    border-color: <?php echo esc_attr($accent_color); ?>;
+}
 
-        .frp-checkbox-input:checked + .frp-checkbox-custom::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.frp-checkbox-input:checked + .frp-checkbox-custom::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
 
-        .frp-checkbox-content {
-            display: flex;
-            flex-direction: column;
-        }
+.frp-checkbox-content {
+    display: flex;
+    flex-direction: column;
+}
 
-        .frp-checkbox-title {
-            font-weight: 600;
-            color: #374151;
-            font-size: 14px;
-            margin-bottom: 0.25rem;
-        }
+.frp-checkbox-title {
+    font-weight: 600;
+    color: #374151;
+    font-size: 14px;
+    margin-bottom: 4px; /* 0.25rem = 4px */
+}
 
-        .frp-checkbox-description {
-            font-size: 0.75rem;
-            color: #6b7280;
-            line-height: 1.4;
-        }
+.frp-checkbox-description {
+    font-size: 12px; /* 0.75rem = 12px */
+    color: #6b7280;
+    line-height: 1.4;
+}
 
-        .frp-form-actions {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-        }
+.frp-form-actions {
+    margin-top: 32px; /* 2rem = 32px */
+    padding-top: 24px; /* 1.5rem = 24px */
+    border-top: 1px solid #e5e7eb;
+}
 
-        .frp-submit-btn {
-            background: <?php echo esc_attr($accent_color); ?> !important;
-            border-color: <?php echo esc_attr($accent_color); ?> !important;
-            color: white !important;
-            padding: 0.75rem 2rem !important;
-            border-radius: 8px !important;
-            font-weight: 600 !important;
-            font-size: 14px !important;
-            transition: all 0.2s ease !important;
-            box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
-        }
+.frp-submit-btn {
+    background: <?php echo esc_attr($accent_color); ?> !important;
+    border-color: <?php echo esc_attr($accent_color); ?> !important;
+    color: white !important;
+    padding: 12px 32px !important; /* 0.75rem = 12px, 2rem = 32px */
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
+}
 
-        .frp-submit-btn:hover {
-            background: <?php echo esc_attr($accent_color); ?> !important;
-            border-color: <?php echo esc_attr($accent_color); ?> !important;
-            transform: translateY(-1px) !important;
-            box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
-        }
+.frp-submit-btn:hover {
+    background: <?php echo esc_attr($accent_color); ?> !important;
+    border-color: <?php echo esc_attr($accent_color); ?> !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
+}
 
-        .frp-ordered-list {
-            padding-left: 1.5rem;
-            margin: 0;
-            color: #64748b;
-            line-height: 1.6;
-        }
+.frp-ordered-list {
+    padding-left: 24px; /* 1.5rem = 24px */
+    margin: 0;
+    color: #64748b;
+    line-height: 1.6;
+}
 
-        .frp-ordered-list li {
-            margin-bottom: 0.5rem;
-        }
+.frp-ordered-list li {
+    margin-bottom: 8px; /* 0.5rem = 8px */
+}
 
-        .frp-ordered-list li:last-child {
-            margin-bottom: 0;
-        }
+.frp-ordered-list li:last-child {
+    margin-bottom: 0;
+}
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .frp-settings-container {
-                grid-template-columns: 1fr;
-            }
-        }
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .frp-settings-container {
+        grid-template-columns: 1fr;
+    }
+}
 
-        @media (max-width: 640px) {
-            .frp-admin-wrap {
-                margin: 10px 10px 0 0;
-            }
+@media (max-width: 640px) {
+    .frp-admin-wrap {
+        margin: 10px 10px 0 0;
+    }
 
-            .frp-main-title {
-                font-size: 1.5rem;
-            }
+    .frp-main-title {
+        font-size: 24px; /* 1.5rem = 24px */
+    }
 
-            .frp-card {
-                margin-bottom: 1rem;
-            }
+    .frp-card {
+        margin-bottom: 16px; /* 1rem = 16px */
+    }
 
-            .frp-color-input-wrapper {
-                flex-direction: column;
-                align-items: stretch;
-            }
+    .frp-color-input-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-            .frp-color-input {
-                width: 100%;
-            }
-        }
+    .frp-color-input {
+        width: 100%;
+    }
+}
     </style>
 
     <script>
@@ -529,361 +529,361 @@ function force_password_reset_modal() {
         ?>
         <style>
             /* Dynamic accent color styles */
-            :root {
-                --frp-accent: <?php echo esc_attr($accent_color); ?>;
-                --frp-accent-hover: <?php echo esc_attr($accent_color); ?>;
-                --frp-accent-light: <?php echo esc_attr($accent_color); ?>;
-                --frp-accent-shadow: <?php echo esc_attr($accent_color); ?>;
-            }
+:root {
+    --frp-accent: <?php echo esc_attr($accent_color); ?>;
+    --frp-accent-hover: <?php echo esc_attr($accent_color); ?>;
+    --frp-accent-light: <?php echo esc_attr($accent_color); ?>;
+    --frp-accent-shadow: <?php echo esc_attr($accent_color); ?>;
+}
 
-            /* Modal Overlay */
-            .frp-modal-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.75);
-                backdrop-filter: blur(4px);
-                z-index: 99999;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-            }
-            
-            .frp-modal-overlay.show {
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            /* Modal Container */
-            .frp-modal {
-                background: #ffffff;
-                border-radius: 16px;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-                max-width: 480px;
-                width: 90%;
-                max-height: 90vh;
-                overflow-y: auto;
-                transform: scale(0.8) translateY(20px);
-                transition: all 0.3s ease;
-                position: relative;
-            }
-            
-            .frp-modal-overlay.show .frp-modal {
-                transform: scale(1) translateY(0);
-            }
-            
-            /* Modal Header */
-            .frp-modal-header {
-                padding: 32px 32px 24px 32px;
-                border-bottom: 1px solid #e5e7eb;
-                text-align: center;
-            }
-            
-            .frp-modal-title {
-                font-size: 24px;
-                font-weight: 700;
-                color: #111827;
-                margin: 0;
-                line-height: 1.3;
-            }
-            
-            .frp-modal-description {
-                color: #6b7280;
-                margin: 12px 0 0 0;
-                font-size: 16px;
-                line-height: 1.5;
-            }
-            
-            /* Modal Body */
-            .frp-modal-body {
-                padding: 32px;
-            }
-            
-            /* Form Styles */
-            .frp-form-group {
-                margin-bottom: 24px;
-            }
-            
-            .frp-form-group:last-child {
-                margin-bottom: 0;
-            }
-            
-            .frp-form-label {
-                display: block;
-                font-size: 14px;
-                font-weight: 600;
-                color: #374151;
-                margin-bottom: 8px;
-            }
-            
-            .frp-input-wrapper {
-                position: relative;
-            }
-            
-            .frp-form-input {
-                width: 100%;
-                height: 60px;
-                padding: 16px;
-                border: 2px solid #e5e7eb;
-                border-radius: 12px;
-                font-size: 16px;
-                color: #111827;
-                background: #ffffff;
-                transition: all 0.2s ease;
-                box-sizing: border-box;
-                outline: none;
-            }
-            
-            .frp-form-input:focus {
-                border-color: var(--frp-accent);
-                box-shadow: 0 0 0 1px var(--frp-accent-light);
-            }
-            
-            .frp-form-input.error {
-                border-color: #ef4444;
-            }
-            
-            /* 6-Digit Code Input */
-            .frp-code-input-container {
-                display: flex;
-                gap: 12px;
-                justify-content: center;
-                margin: 16px 0;
-            }
-            
-            .frp-code-input {
-                width: 50px;
-                height: 60px;
-                border: 2px solid #e5e7eb;
-                border-radius: 12px;
-                font-size: 24px;
-                font-weight: 600;
-                text-align: center;
-                color: #111827;
-                background: #ffffff;
-                transition: all 0.2s ease;
-                outline: none;
-            }
-            
-            .frp-code-input:focus {
-                border-color: var(--frp-accent);
-                box-shadow: 0 0 0 3px var(--frp-accent-light);
-                transform: scale(1.05);
-            }
-            
-            .frp-code-input.filled {
-                border-color: #10b981;
-                background: #f0fdf4;
-            }
-            
-            .frp-code-input.error {
-                border-color: #ef4444;
-                background: #fef2f2;
-            }
-            
-            /* Password Toggle */
-            .frp-password-toggle {
-                position: absolute;
-                right: 16px;
-                top: 50%;
-                transform: translateY(-50%);
-                background: none;
-                border: none;
-                color: #6b7280;
-                cursor: pointer;
-                font-size: 14px;
-                font-weight: 500;
-                padding: 4px 8px;
-                border-radius: 6px;
-                transition: all 0.2s ease;
-            }
-            
-            .frp-password-toggle:hover {
-                color: #374151;
-                background: #f3f4f6;
-            }
-            
-            /* Error Messages */
-            .frp-error-message {
-                color: #ef4444;
-                font-size: 14px;
-                margin-top: 8px;
-                font-weight: 500;
-            }
-            
-            /* Notification */
-            .frp-notification {
-                padding: 16px;
-                border-radius: 12px;
-                margin-bottom: 24px;
-                font-size: 14px;
-                font-weight: 500;
-                display: none;
-                animation: slideDown 0.3s ease;
-            }
-            
-            .frp-notification.success {
-                background: #dcfce7;
-                color: #166534;
-                border: 1px solid #bbf7d0;
-            }
-            
-            .frp-notification.error {
-                background: #fef2f2;
-                color: #dc2626;
-                border: 1px solid #fecaca;
-            }
-            
-            @keyframes slideDown {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            /* Buttons */
-            .frp-button-group {
-                display: flex;
-                gap: 12px;
-                margin-top: 32px;
-            }
-            
-            .frp-button {
-                flex: 1;
-                padding: 16px 24px;
-                border-radius: 12px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                border: none;
-                outline: none;
-                position: relative;
-                overflow: hidden;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-            }
-            
-            .frp-button-primary  {
-                background: <?php echo esc_attr($accent_color); ?> !important;
-                border-color: <?php echo esc_attr($accent_color); ?> !important;
-                color: white !important;
-                padding: 0.75rem 2rem !important;
-                border-radius: 8px !important;
-                font-weight: 600 !important;
-                font-size: 14px !important;
-                transition: all 0.2s ease !important;
-                box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
-            }
-            
-            .frp-button-primary:hover {
-                background: var(--frp-accent-hover);
-                transform: translateY(-1px);
-                box-shadow: 0 8px 25px var(--frp-accent-shadow);
-            }
-            
-            .frp-button-secondary {
-                background: <?php echo esc_attr($accent_color); ?> !important;
-                border-color: <?php echo esc_attr($accent_color); ?> !important;
-                color: white !important;
-                padding: 0.75rem 2rem !important;
-                border-radius: 8px !important;
-                font-weight: 600 !important;
-                font-size: 14px !important;
-                transition: all 0.2s ease !important;
-                box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
-            }
-            
-            .frp-button-secondary:hover {
-                background: <?php echo esc_attr($accent_color); ?> !important;
-                border-color: <?php echo esc_attr($accent_color); ?> !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
-            }
-            
-            .frp-button:disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
-                transform: none !important;
-                box-shadow: none !important;
-            }
-            
-            /* Loading State */
-            .frp-button.loading::after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 20px;
-                height: 20px;
-                margin: -10px 0 0 -10px;
-                border: 2px solid transparent;
-                border-top: 2px solid currentColor;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            
-            .frp-button.loading {
-                color: transparent;
-            }
-            
-            @keyframes spin {
-                to {
-                    transform: rotate(360deg);
-                }
-            }
-            
-            /* Step Transitions */
-            .frp-step {
-                transition: all 0.3s ease;
-            }
-            
-            .frp-step.hidden {
-                display: none;
-            }
-            
-            /* Mobile Responsive */
-            @media (max-width: 640px) {
-                .frp-modal {
-                    margin: 20px;
-                    width: calc(100% - 40px);
-                }
-                
-                .frp-modal-header {
-                    padding: 24px 24px 20px 24px;
-                }
-                
-                .frp-modal-body {
-                    padding: 24px;
-                }
-                
-                .frp-modal-title {
-                    font-size: 20px;
-                }
-                
-                .frp-button-group {
-                    flex-direction: column;
-                }
-                
-                .frp-form-input {
-                    padding: 14px;
-                }
-                
-                .frp-button {
-                    padding: 14px 20px;
-                }
-            }
+/* Modal Overlay */
+.frp-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.frp-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Container */
+.frp-modal {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    max-width: 480px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.8) translateY(20px);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.frp-modal-overlay.show .frp-modal {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Header */
+.frp-modal-header {
+    padding: 32px 32px 24px 32px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.frp-modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.frp-modal-description {
+    color: #6b7280;
+    margin: 12px 0 0 0; /* 0.75rem = 12px */
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Modal Body */
+.frp-modal-body {
+    padding: 32px;
+}
+
+/* Form Styles */
+.frp-form-group {
+    margin-bottom: 24px;
+}
+
+.frp-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.frp-form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.frp-input-wrapper {
+    position: relative;
+}
+
+.frp-form-input {
+    width: 100%;
+    height: 60px;
+    padding: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #111827;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.frp-form-input:focus {
+    border-color: var(--frp-accent);
+    box-shadow: 0 0 0 1px var(--frp-accent-light);
+}
+
+.frp-form-input.error {
+    border-color: #ef4444;
+}
+
+/* 6-Digit Code Input */
+.frp-code-input-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.frp-code-input {
+    width: 50px;
+    height: 60px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #111827;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.frp-code-input:focus {
+    border-color: var(--frp-accent);
+    box-shadow: 0 0 0 3px var(--frp-accent-light);
+    transform: scale(1.05);
+}
+
+.frp-code-input.filled {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.frp-code-input.error {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+/* Password Toggle */
+.frp-password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.frp-password-toggle:hover {
+    color: #374151;
+    background: #f3f4f6;
+}
+
+/* Error Messages */
+.frp-error-message {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+/* Notification */
+.frp-notification {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+.frp-notification.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.frp-notification.error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Buttons */
+.frp-button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.frp-button {
+    flex: 1;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.frp-button-primary  {
+    background: <?php echo esc_attr($accent_color); ?> !important;
+    border-color: <?php echo esc_attr($accent_color); ?> !important;
+    color: white !important;
+    padding: 12px 32px !important; /* 0.75rem = 12px, 2rem = 32px */
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
+}
+
+.frp-button-primary:hover {
+    background: var(--frp-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px var(--frp-accent-shadow);
+}
+
+.frp-button-secondary {
+    background: <?php echo esc_attr($accent_color); ?> !important;
+    border-color: <?php echo esc_attr($accent_color); ?> !important;
+    color: white !important;
+    padding: 12px 32px !important; /* 0.75rem = 12px, 2rem = 32px */
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
+}
+
+.frp-button-secondary:hover {
+    background: <?php echo esc_attr($accent_color); ?> !important;
+    border-color: <?php echo esc_attr($accent_color); ?> !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
+}
+
+.frp-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Loading State */
+.frp-button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.frp-button.loading {
+    color: transparent;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Step Transitions */
+.frp-step {
+    transition: all 0.3s ease;
+}
+
+.frp-step.hidden {
+    display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .frp-modal {
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+
+    .frp-modal-header {
+        padding: 24px 24px 20px 24px;
+    }
+
+    .frp-modal-body {
+        padding: 24px;
+    }
+
+    .frp-modal-title {
+        font-size: 20px;
+    }
+
+    .frp-button-group {
+        flex-direction: column;
+    }
+
+    .frp-form-input {
+        padding: 14px;
+    }
+
+    .frp-button {
+        padding: 14px 20px;
+    }
+}
         </style>
 
         <!-- Custom Modal -->
@@ -1333,303 +1333,303 @@ function frp_account_deletion_shortcode() {
     <!-- Custom CSS matching your existing modal -->
     <style>
     :root {
-        --frp-accent: #dc3545;
-        --frp-accent-hover: #bababa;
-        --frp-accent-light: #fafafa;
-        --frp-accent-shadow: #f6f6f6;
-        --frp-border: #e5e7eb;
-        --frp-text-primary: #374151;
-        --frp-text-secondary: #6b7280;
-        --frp-success-bg: #d4edda;
-        --frp-success-border: #c3e6cb;
-        --frp-error-bg: #f8d7da;
-        --frp-error-border: #f5c6cb;
-    }
+    --frp-accent: #dc3545;
+    --frp-accent-hover: #bababa;
+    --frp-accent-light: #fafafa;
+    --frp-accent-shadow: #f6f6f6;
+    --frp-border: #e5e7eb;
+    --frp-text-primary: #374151;
+    --frp-text-secondary: #6b7280;
+    --frp-success-bg: #d4edda;
+    --frp-success-border: #c3e6cb;
+    --frp-error-bg: #f8d7da;
+    --frp-error-border: #f5c6cb;
+}
 
-    .frp-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(4px);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+.frp-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
 
-    .frp-modal-overlay.show {
-        opacity: 1;
-        visibility: visible;
-    }
+.frp-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
 
+.frp-modal {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.frp-modal-overlay.show .frp-modal {
+    transform: scale(1);
+}
+
+.frp-modal-header {
+    padding: 32px 32px 16px; /* 2rem = 32px, 1rem = 16px */
+    border-bottom: 1px solid var(--frp-border);
+    text-align: center;
+}
+
+.frp-modal-title {
+    font-size: 24px; /* 1.5rem = 24px */
+    font-weight: 600;
+    color: #23282d;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.frp-modal-description {
+    color: var(--frp-text-secondary);
+    margin: 8px 0 0; /* 0.5rem = 8px */
+    font-size: 15.2px; /* 0.95rem = 15.2px */
+    line-height: 1.5;
+}
+
+.frp-modal-body {
+    padding: 32px; /* 2rem = 32px */
+}
+
+.frp-notification {
+    padding: 12px 16px; /* 0.75rem = 12px, 1rem = 16px */
+    border-radius: 6px;
+    margin-bottom: 24px; /* 1.5rem = 24px */
+    font-size: 14.4px; /* 0.9rem = 14.4px */
+    font-weight: 500;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+.frp-notification.success {
+    background: var(--frp-success-bg);
+    color: #155724;
+    border: 1px solid var(--frp-success-border);
+}
+
+.frp-notification.error {
+    background: var(--frp-error-bg);
+    color: #721c24;
+    border: 1px solid var(--frp-error-border);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.frp-form-group {
+    margin-bottom: 24px; /* 1.5rem = 24px */
+}
+
+.frp-form-label {
+    display: block;
+    margin-bottom: 8px; /* 0.5rem = 8px */
+    font-weight: 500;
+    color: var(--frp-text-primary);
+}
+
+.frp-code-input-container {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 16px 0; /* 1rem = 16px */
+}
+
+.frp-code-input {
+    width: 45px;
+    height: 55px;
+    border: 2px solid var(--frp-border);
+    border-radius: 8px;
+    font-size: 19.2px; /* 1.2rem = 19.2px */
+    font-weight: 600;
+    text-align: center;
+    color: var(--frp-text-primary);
+    background: #fff;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.frp-code-input:focus {
+    outline: none;
+    border-color: var(--frp-accent);
+    box-shadow: 0 0 0 3px var(--frp-accent-light);
+}
+
+.frp-code-input.filled {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.frp-code-input.error {
+    border-color: #dc3545;
+    background: var(--frp-error-bg);
+}
+
+.frp-error-message {
+    color: #dc3545;
+    font-size: 13.6px; /* 0.85rem = 13.6px */
+    margin-top: 8px; /* 0.5rem = 8px */
+}
+
+.frp-button-group {
+    display: flex;
+    gap: 16px; /* 1rem = 16px */
+    margin-top: 32px; /* 2rem = 32px */
+}
+
+.frp-button,
+.frp-button-primary  {
+    flex: 1;
+    padding: 12px 32px; /* 0.75rem = 12px, 2rem = 32px */
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 16px; /* 1em = 16px (based on font-size: 14px) */
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid var(--frp-accent);
+    background: var(--frp-accent);
+    color: #fff;
+    box-shadow: 0 2px 4px var(--frp-accent-shadow);
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.frp-button-secondary {
+    flex: 1;
+    padding: 12px 32px; /* 0.75rem = 12px, 2rem = 32px */
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 16px; /* 1em = 16px (based on font-size: 14px) */
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid var(--frp-accent-hover);
+    background: var(--frp-accent-light);
+    color: var(--frp-accent-hover);
+    box-shadow: 0 2px 4px var(--frp-accent-shadow);
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.frp-button:hover,
+.frp-button-primary:hover {
+    background: var(--frp-accent);
+    border-color: var(--frp-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--frp-accent-shadow);
+}
+
+.frp-button-secondary:hover {
+    background: var(--frp-accent-hover);
+    color: var(--frp-accent-light);
+    border-color: var(--frp-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--frp-accent-shadow);
+}
+
+.frp-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.frp-button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.frp-button.loading {
+    color: transparent;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.frp-checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px; /* 0.5rem = 8px */
+    margin: 16px 0; /* 1rem = 16px */
+}
+
+.frp-checkbox-group input[type="checkbox"] {
+    margin: 0;
+    margin-top: 1.6px; /* 0.1rem = 1.6px */
+}
+
+.frp-checkbox-group label {
+    margin: 0;
+    font-size: 14.4px; /* 0.9rem = 14.4px */
+    line-height: 1.4;
+    color: #444;
+}
+
+@media (max-width: 640px) {
     .frp-modal {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-        max-width: 500px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-        transform: scale(0.8);
-        transition: transform 0.3s ease;
-    }
-
-    .frp-modal-overlay.show .frp-modal {
-        transform: scale(1);
+        margin: 20px;
+        width: calc(100% - 40px);
     }
 
     .frp-modal-header {
-        padding: 2rem 2rem 1rem;
-        border-bottom: 1px solid var(--frp-border);
-        text-align: center;
-    }
-
-    .frp-modal-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #23282d;
-        margin: 0;
-        line-height: 1.3;
-    }
-
-    .frp-modal-description {
-        color: var(--frp-text-secondary);
-        margin: 0.5rem 0 0;
-        font-size: 0.95rem;
-        line-height: 1.5;
+        padding: 24px 24px 16px; /* 1.5rem = 24px, 1rem = 16px */
     }
 
     .frp-modal-body {
-        padding: 2rem;
+        padding: 24px; /* 1.5rem = 24px */
     }
 
-    .frp-notification {
-        padding: 0.75rem 1rem;
-        border-radius: 6px;
-        margin-bottom: 1.5rem;
-        font-size: 0.9rem;
-        font-weight: 500;
-        display: none;
-        animation: slideDown 0.3s ease;
-    }
-
-    .frp-notification.success {
-        background: var(--frp-success-bg);
-        color: #155724;
-        border: 1px solid var(--frp-success-border);
-    }
-
-    .frp-notification.error {
-        background: var(--frp-error-bg);
-        color: #721c24;
-        border: 1px solid var(--frp-error-border);
-    }
-
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .frp-form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .frp-form-label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        color: var(--frp-text-primary);
-    }
-
-    .frp-code-input-container {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-        margin: 1rem 0;
-    }
-
-    .frp-code-input {
-        width: 45px;
-        height: 55px;
-        border: 2px solid var(--frp-border);
-        border-radius: 8px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        text-align: center;
-        color: var(--frp-text-primary);
-        background: #fff;
-        transition: border-color 0.2s ease, background-color 0.2s ease;
-    }
-
-    .frp-code-input:focus {
-        outline: none;
-        border-color: var(--frp-accent);
-        box-shadow: 0 0 0 3px var(--frp-accent-light);
-    }
-
-    .frp-code-input.filled {
-        border-color: #10b981;
-        background: #f0fdf4;
-    }
-
-    .frp-code-input.error {
-        border-color: #dc3545;
-        background: var(--frp-error-bg);
-    }
-
-    .frp-error-message {
-        color: #dc3545;
-        font-size: 0.85rem;
-        margin-top: 0.5rem;
+    .frp-modal-title {
+        font-size: 20px; /* 1.25rem = 20px */
     }
 
     .frp-button-group {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
+        flex-direction: column;
     }
 
-    .frp-button,
-    .frp-button-primary  {
-        flex: 1;
-        padding: 0.75rem 2rem;
-        border-radius: 8px;
-        font-size: 14px;
-        line-height: 1em;
-        font-weight: 400;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: 2px solid var(--frp-accent);
-        background: var(--frp-accent);
-        color: #fff;
-        box-shadow: 0 2px 4px var(--frp-accent-shadow);
-        text-align: center;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    .frp-button {
+        padding: 12px; /* 0.75rem = 12px */
     }
 
-    .frp-button-secondary {
-        flex: 1;
-        padding: 0.75rem 2rem;
-        border-radius: 8px;
-        font-size: 14px;
-        line-height: 1em;
-        font-weight: 400;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: 2px solid var(--frp-accent-hover);
-        background: var(--frp-accent-light);
-        color: var(--frp-accent-hover);
-        box-shadow: 0 2px 4px var(--frp-accent-shadow);
-        text-align: center;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    .frp-code-input {
+        width: 40px;
+        height: 50px;
+        font-size: 16px; /* 1rem = 16px */
     }
-
-    .frp-button:hover,
-    .frp-button-primary:hover {
-        background: var(--frp-accent);
-        border-color: var(--frp-accent);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px var(--frp-accent-shadow);
-    }
-
-    .frp-button-secondary:hover {
-        background: var(--frp-accent-hover);
-        color: var(--frp-accent-light);
-        border-color: var(--frp-accent-hover);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px var(--frp-accent-shadow);
-    }
-
-    .frp-button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-    }
-
-    .frp-button.loading::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 16px;
-        height: 16px;
-        margin: -8px 0 0 -8px;
-        border: 2px solid transparent;
-        border-top: 2px solid currentColor;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    .frp-button.loading {
-        color: transparent;
-    }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-
-    .frp-checkbox-group {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.5rem;
-        margin: 1rem 0;
-    }
-
-    .frp-checkbox-group input[type="checkbox"] {
-        margin: 0;
-        margin-top: 0.1rem;
-    }
-
-    .frp-checkbox-group label {
-        margin: 0;
-        font-size: 0.9rem;
-        line-height: 1.4;
-        color: #444;
-    }
-
-    @media (max-width: 640px) {
-        .frp-modal {
-            margin: 20px;
-            width: calc(100% - 40px);
-        }
-
-        .frp-modal-header {
-            padding: 1.5rem 1.5rem 1rem;
-        }
-
-        .frp-modal-body {
-            padding: 1.5rem;
-        }
-
-        .frp-modal-title {
-            font-size: 1.25rem;
-        }
-
-        .frp-button-group {
-            flex-direction: column;
-        }
-
-        .frp-button {
-            padding: 0.75rem;
-        }
-
-        .frp-code-input {
-            width: 40px;
-            height: 50px;
-            font-size: 1rem;
-        }
-    }
+}
 </style>
 
     <button id="frpDeleteAccountBtn" class="frp-button frp-button-primary">Delete My Account and Erase All Content</button>
