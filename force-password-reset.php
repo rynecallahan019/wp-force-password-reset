@@ -4,7 +4,7 @@ Plugin Name: WP Force Password Reset
 Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 GitHub Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 Description: Adding a user field that when set to true, forces the user to reset their password the next time they log in.
-Version: 1.9.2
+Version: 1.9.3
 Author: Callabridge
 Author URI: https://callabridge.com/
 */
