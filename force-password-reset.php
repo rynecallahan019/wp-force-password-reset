@@ -4,7 +4,7 @@ Plugin Name: WP Force Password Reset
 Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 GitHub Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 Description: Adding a user field that when set to true, forces the user to reset their password the next time they log in.
-Version: 1.8.1
+Version: 1.9.1
 Author: Callabridge
 Author URI: https://callabridge.com/
 */
@@ -303,7 +303,7 @@ function frp_render_options_page() {
         .frp-label-text {
             font-weight: 600;
             color: #374151;
-            font-size: 0.875rem;
+            font-size: 14px;
             margin-bottom: 0.25rem;
         }
 
@@ -319,7 +319,7 @@ function frp_render_options_page() {
             padding: 0.75rem 1rem;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
-            font-size: 0.875rem;
+            font-size: 14px;
             color: #374151;
             background: #ffffff;
             transition: all 0.2s ease;
@@ -330,7 +330,7 @@ function frp_render_options_page() {
         .frp-form-textarea:focus {
             outline: none;
             border-color: <?php echo esc_attr($accent_color); ?>;
-            box-shadow: 0 0 0 3px <?php echo esc_attr($accent_color); ?>20;
+            box-shadow: 0 0 0 1px <?php echo esc_attr($accent_color); ?>20;
         }
 
         .frp-form-textarea {
@@ -363,7 +363,7 @@ function frp_render_options_page() {
             padding: 0.75rem 1rem;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
-            font-size: 0.875rem;
+            font-size: 14px;
             color: #6b7280;
             background: #f9fafb;
             font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
@@ -424,7 +424,7 @@ function frp_render_options_page() {
         .frp-checkbox-title {
             font-weight: 600;
             color: #374151;
-            font-size: 0.875rem;
+            font-size: 14px;
             margin-bottom: 0.25rem;
         }
 
@@ -447,16 +447,16 @@ function frp_render_options_page() {
             padding: 0.75rem 2rem !important;
             border-radius: 8px !important;
             font-weight: 600 !important;
-            font-size: 0.875rem !important;
+            font-size: 14px !important;
             transition: all 0.2s ease !important;
-            box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?>30 !important;
+            box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
         }
 
         .frp-submit-btn:hover {
-            background: <?php echo esc_attr($accent_color); ?>dd !important;
-            border-color: <?php echo esc_attr($accent_color); ?>dd !important;
+            background: <?php echo esc_attr($accent_color); ?> !important;
+            border-color: <?php echo esc_attr($accent_color); ?> !important;
             transform: translateY(-1px) !important;
-            box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?>40 !important;
+            box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
         }
 
         .frp-ordered-list {
@@ -531,9 +531,9 @@ function force_password_reset_modal() {
             /* Dynamic accent color styles */
             :root {
                 --frp-accent: <?php echo esc_attr($accent_color); ?>;
-                --frp-accent-hover: <?php echo esc_attr($accent_color); ?>dd;
-                --frp-accent-light: <?php echo esc_attr($accent_color); ?>20;
-                --frp-accent-shadow: <?php echo esc_attr($accent_color); ?>30;
+                --frp-accent-hover: <?php echo esc_attr($accent_color); ?>;
+                --frp-accent-light: <?php echo esc_attr($accent_color); ?>;
+                --frp-accent-shadow: <?php echo esc_attr($accent_color); ?>;
             }
 
             /* Modal Overlay */
@@ -641,7 +641,7 @@ function force_password_reset_modal() {
             
             .frp-form-input:focus {
                 border-color: var(--frp-accent);
-                box-shadow: 0 0 0 3px var(--frp-accent-light);
+                box-shadow: 0 0 0 1px var(--frp-accent-light);
             }
             
             .frp-form-input.error {
@@ -775,9 +775,16 @@ function force_password_reset_modal() {
                 text-align: center;
             }
             
-            .frp-button-primary {
-                background: var(--frp-accent);
-                color: white;
+            .frp-button-primary  {
+                background: <?php echo esc_attr($accent_color); ?> !important;
+                border-color: <?php echo esc_attr($accent_color); ?> !important;
+                color: white !important;
+                padding: 0.75rem 2rem !important;
+                border-radius: 8px !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                transition: all 0.2s ease !important;
+                box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
             }
             
             .frp-button-primary:hover {
@@ -787,14 +794,22 @@ function force_password_reset_modal() {
             }
             
             .frp-button-secondary {
-                background: #f3f4f6;
-                color: #374151;
-                border: 2px solid #e5e7eb;
+                background: <?php echo esc_attr($accent_color); ?> !important;
+                border-color: <?php echo esc_attr($accent_color); ?> !important;
+                color: white !important;
+                padding: 0.75rem 2rem !important;
+                border-radius: 8px !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                transition: all 0.2s ease !important;
+                box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
             }
             
             .frp-button-secondary:hover {
-                background: #e5e7eb;
-                border-color: #d1d5db;
+                background: <?php echo esc_attr($accent_color); ?> !important;
+                border-color: <?php echo esc_attr($accent_color); ?> !important;
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
             }
             
             .frp-button:disabled {
@@ -1283,3 +1298,636 @@ function set_default_force_password_reset($user_id) {
     }
 }
 add_action('user_register', 'set_default_force_password_reset');
+
+//////////
+
+
+//Adding delete account feature
+//Adding delete account feature
+// Add setting to General Settings page
+function frp_register_general_settings() {
+    register_setting('general', 'frp_allow_user_deletion', [
+        'type' => 'boolean',
+        'description' => 'Allow users to delete their own account.',
+        'sanitize_callback' => 'rest_sanitize_boolean',
+        'default' => false,
+    ]);
+
+    add_settings_field(
+        'frp_allow_user_deletion',
+        'Allow User Account Deletion',
+        function () {
+            $value = get_option('frp_allow_user_deletion', false);
+            echo '<label><input type="checkbox" name="frp_allow_user_deletion" value="1" ' . checked(1, $value, false) . '> Allow users to delete their own accounts via shortcode</label>';
+        },
+        'general'
+    );
+}
+add_action('admin_init', 'frp_register_general_settings');
+
+// Shortcode output
+function frp_account_deletion_shortcode() {
+    if (!is_user_logged_in() || !get_option('frp_allow_user_deletion')) return '';
+    ob_start();
+    ?>
+    <!-- Custom CSS matching your existing modal -->
+    <style>
+    :root {
+        --frp-accent: #dc3545;
+        --frp-accent-hover: #bababa;
+        --frp-accent-light: #fafafa;
+        --frp-accent-shadow: #f6f6f6;
+        --frp-border: #e5e7eb;
+        --frp-text-primary: #374151;
+        --frp-text-secondary: #6b7280;
+        --frp-success-bg: #d4edda;
+        --frp-success-border: #c3e6cb;
+        --frp-error-bg: #f8d7da;
+        --frp-error-border: #f5c6cb;
+    }
+
+    .frp-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(4px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .frp-modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .frp-modal {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .frp-modal-overlay.show .frp-modal {
+        transform: scale(1);
+    }
+
+    .frp-modal-header {
+        padding: 2rem 2rem 1rem;
+        border-bottom: 1px solid var(--frp-border);
+        text-align: center;
+    }
+
+    .frp-modal-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #23282d;
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    .frp-modal-description {
+        color: var(--frp-text-secondary);
+        margin: 0.5rem 0 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .frp-modal-body {
+        padding: 2rem;
+    }
+
+    .frp-notification {
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: none;
+        animation: slideDown 0.3s ease;
+    }
+
+    .frp-notification.success {
+        background: var(--frp-success-bg);
+        color: #155724;
+        border: 1px solid var(--frp-success-border);
+    }
+
+    .frp-notification.error {
+        background: var(--frp-error-bg);
+        color: #721c24;
+        border: 1px solid var(--frp-error-border);
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .frp-form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .frp-form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--frp-text-primary);
+    }
+
+    .frp-code-input-container {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin: 1rem 0;
+    }
+
+    .frp-code-input {
+        width: 45px;
+        height: 55px;
+        border: 2px solid var(--frp-border);
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: center;
+        color: var(--frp-text-primary);
+        background: #fff;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .frp-code-input:focus {
+        outline: none;
+        border-color: var(--frp-accent);
+        box-shadow: 0 0 0 3px var(--frp-accent-light);
+    }
+
+    .frp-code-input.filled {
+        border-color: #10b981;
+        background: #f0fdf4;
+    }
+
+    .frp-code-input.error {
+        border-color: #dc3545;
+        background: var(--frp-error-bg);
+    }
+
+    .frp-error-message {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+
+    .frp-button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .frp-button,
+    .frp-button-primary  {
+        flex: 1;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1em;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 2px solid var(--frp-accent);
+        background: var(--frp-accent);
+        color: #fff;
+        box-shadow: 0 2px 4px var(--frp-accent-shadow);
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .frp-button-secondary {
+        flex: 1;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1em;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 2px solid var(--frp-accent-hover);
+        background: var(--frp-accent-light);
+        color: var(--frp-accent-hover);
+        box-shadow: 0 2px 4px var(--frp-accent-shadow);
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .frp-button:hover,
+    .frp-button-primary:hover {
+        background: var(--frp-accent);
+        border-color: var(--frp-accent);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px var(--frp-accent-shadow);
+    }
+
+    .frp-button-secondary:hover {
+        background: var(--frp-accent-hover);
+        color: var(--frp-accent-light);
+        border-color: var(--frp-accent-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px var(--frp-accent-shadow);
+    }
+
+    .frp-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .frp-button.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 16px;
+        height: 16px;
+        margin: -8px 0 0 -8px;
+        border: 2px solid transparent;
+        border-top: 2px solid currentColor;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .frp-button.loading {
+        color: transparent;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .frp-checkbox-group {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+
+    .frp-checkbox-group input[type="checkbox"] {
+        margin: 0;
+        margin-top: 0.1rem;
+    }
+
+    .frp-checkbox-group label {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        color: #444;
+    }
+
+    @media (max-width: 640px) {
+        .frp-modal {
+            margin: 20px;
+            width: calc(100% - 40px);
+        }
+
+        .frp-modal-header {
+            padding: 1.5rem 1.5rem 1rem;
+        }
+
+        .frp-modal-body {
+            padding: 1.5rem;
+        }
+
+        .frp-modal-title {
+            font-size: 1.25rem;
+        }
+
+        .frp-button-group {
+            flex-direction: column;
+        }
+
+        .frp-button {
+            padding: 0.75rem;
+        }
+
+        .frp-code-input {
+            width: 40px;
+            height: 50px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+    <button id="frpDeleteAccountBtn" class="frp-button frp-button-primary">Delete My Account and Erase All Content</button>
+    
+    <!-- Custom Modal -->
+    <div class="frp-modal-overlay" id="frpDeleteModalOverlay">
+        <div class="frp-modal" id="frpDeleteModal">
+            <div class="frp-modal-header">
+                <h2 class="frp-modal-title">Delete Account</h2>
+                <p class="frp-modal-description">Are you sure you would like to delete your account? This cannot be undone.</p>
+            </div>
+            <div class="frp-modal-body">
+                <div id="frpDeleteNotification" class="frp-notification"></div>
+
+                <div id="frpDelete2faStep" class="frp-step">
+                    <form id="frpDelete2faForm">
+                        <div class="frp-form-group">
+                            <label for="frpDelete2faCode" class="frp-form-label">Enter 6-digit code that was sent to the email on file</label>
+                            <div class="frp-code-input-container">
+                                <input type="text" class="frp-code-input" maxlength="1" data-index="0">
+                                <input type="text" class="frp-code-input" maxlength="1" data-index="1">
+                                <input type="text" class="frp-code-input" maxlength="1" data-index="2">
+                                <input type="text" class="frp-code-input" maxlength="1" data-index="3">
+                                <input type="text" class="frp-code-input" maxlength="1" data-index="4">
+                                <input type="text" class="frp-code-input" maxlength="1" data-index="5">
+                            </div>
+                            <div id="frpDelete2faCodeError" class="frp-error-message"></div>
+                        </div>
+                        <div class="frp-checkbox-group">
+                            <input type="checkbox" id="frpAgreeDelete" required>
+                            <label for="frpAgreeDelete">I understand this action is permanent and irreversible</label>
+                        </div>
+                        <div class="frp-button-group">
+                            <button type="button" class="frp-button frp-button-secondary" id="frpDeleteCancel">Cancel</button>
+                            <button type="button" class="frp-button frp-button-secondary" id="frpDeleteSend2faCode">Send New Code</button>
+                            <button type="submit" class="frp-button frp-button-primary">Permanently Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalOverlay = document.getElementById('frpDeleteModalOverlay');
+            const modal = document.getElementById('frpDeleteModal');
+            const notification = document.getElementById('frpDeleteNotification');
+            const codeInputs = document.querySelectorAll('.frp-code-input');
+            
+            function showDeleteNotification(message, isSuccess) {
+                notification.className = 'frp-notification ' + (isSuccess ? 'success' : 'error');
+                notification.textContent = message;
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+
+            function setButtonLoading(button, loading) {
+                if (loading) {
+                    button.classList.add('loading');
+                    button.disabled = true;
+                } else {
+                    button.classList.remove('loading');
+                    button.disabled = false;
+                }
+            }
+
+            function getCodeValue() {
+                return Array.from(codeInputs).map(input => input.value).join('');
+            }
+            
+            function clearCodeInputs() {
+                codeInputs.forEach((input, index) => {
+                    input.value = '';
+                    input.classList.remove('filled', 'error');
+                    if (index === 0) input.focus();
+                });
+            }
+            
+            // 6-digit code input handling
+            codeInputs.forEach((input, index) => {
+                input.addEventListener('input', function(e) {
+                    const value = e.target.value;
+                    
+                    // Only allow numbers
+                    if (!/^\d*$/.test(value)) {
+                        e.target.value = '';
+                        return;
+                    }
+                    
+                    if (value) {
+                        e.target.classList.add('filled');
+                        e.target.classList.remove('error');
+                        
+                        // Move to next input
+                        if (index < codeInputs.length - 1) {
+                            codeInputs[index + 1].focus();
+                        }
+                    } else {
+                        e.target.classList.remove('filled');
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    // Handle backspace
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        codeInputs[index - 1].focus();
+                        codeInputs[index - 1].value = '';
+                        codeInputs[index - 1].classList.remove('filled');
+                    }
+                    
+                    // Handle paste
+                    if (e.key === 'v' && (e.ctrlKey || e.metaKey)) {
+                        e.preventDefault();
+                        navigator.clipboard.readText().then(text => {
+                            const numbers = text.replace(/\D/g, '').slice(0, 6);
+                            codeInputs.forEach((input, i) => {
+                                input.value = numbers[i] || '';
+                                if (numbers[i]) {
+                                    input.classList.add('filled');
+                                } else {
+                                    input.classList.remove('filled');
+                                }
+                            });
+                            if (numbers.length > 0) {
+                                const lastFilledIndex = Math.min(numbers.length - 1, 5);
+                                codeInputs[lastFilledIndex].focus();
+                            }
+                        });
+                    }
+                    
+                    // Handle arrow keys
+                    if (e.key === 'ArrowLeft' && index > 0) {
+                        codeInputs[index - 1].focus();
+                    }
+                    if (e.key === 'ArrowRight' && index < codeInputs.length - 1) {
+                        codeInputs[index + 1].focus();
+                    }
+                });
+            });
+
+            function sendDelete2FACode() {
+                const sendBtn = document.getElementById('frpDeleteSend2faCode');
+                setButtonLoading(sendBtn, true);
+                
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=send_2fa_code'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    setButtonLoading(sendBtn, false);
+                    if (data === 'success') {
+                        showDeleteNotification('A 6-digit code has been sent to your email. Check spam folder if you don\'t see it.', true);
+                    } else {
+                        showDeleteNotification('Failed to send email. Please try again.', false);
+                    }
+                })
+                .catch(() => {
+                    setButtonLoading(sendBtn, false);
+                    showDeleteNotification('An error occurred. Please try again.', false);
+                });
+            }
+
+            // Show modal and send 2FA code
+            document.getElementById('frpDeleteAccountBtn').addEventListener('click', function() {
+                // Clear any previous form data
+                clearCodeInputs();
+                document.getElementById('frpAgreeDelete').checked = false;
+                document.getElementById('frpDelete2faCodeError').textContent = '';
+                document.getElementById('frpDeleteNotification').style.display = 'none';
+                
+                // Show modal with animation
+                modalOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                
+                // Focus first input and send code
+                setTimeout(() => {
+                    if (codeInputs.length > 0) {
+                        codeInputs[0].focus();
+                    }
+                    sendDelete2FACode();
+                }, 100);
+            });
+
+            // Cancel button
+            document.getElementById('frpDeleteCancel').addEventListener('click', function() {
+                modalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+
+            // Send new code button
+            document.getElementById('frpDeleteSend2faCode').addEventListener('click', sendDelete2FACode);
+
+            // Handle form submission
+            document.getElementById('frpDelete2faForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const code = getCodeValue();
+                const agree = document.getElementById('frpAgreeDelete').checked;
+                const submitBtn = this.querySelector('button[type="submit"]');
+                
+                // Clear previous errors
+                codeInputs.forEach(input => input.classList.remove('error'));
+                document.getElementById('frpDelete2faCodeError').textContent = '';
+                
+                if (!agree) {
+                    showDeleteNotification('You must confirm that you understand this action is permanent.', false);
+                    return;
+                }
+                
+                if (code.length !== 6) {
+                    codeInputs.forEach(input => input.classList.add('error'));
+                    document.getElementById('frpDelete2faCodeError').textContent = 'Please enter all 6 digits';
+                    return;
+                }
+                
+                setButtonLoading(submitBtn, true);
+                
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=frp_delete_user_account&code=' + encodeURIComponent(code)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    setButtonLoading(submitBtn, false);
+                    if (data === 'success') {
+                        showDeleteNotification('Account deleted successfully. Redirecting...', true);
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 2000);
+                    } else {
+                        codeInputs.forEach(input => input.classList.add('error'));
+                        showDeleteNotification('Verification failed or error occurred. Please try again.', false);
+                        setTimeout(() => {
+                            clearCodeInputs();
+                        }, 1000);
+                    }
+                })
+                .catch(() => {
+                    setButtonLoading(submitBtn, false);
+                    showDeleteNotification('An error occurred. Please try again.', false);
+                });
+            });
+
+            // Close modal when clicking outside
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('frp_delete_account', 'frp_account_deletion_shortcode');
+
+// Handle deletion AJAX
+function frp_handle_delete_user_account() {
+    $user_id = get_current_user_id();
+    if (!$user_id) wp_die('error');
+
+    $code = sanitize_text_field($_POST['code'] ?? '');
+    $stored_code = get_user_meta($user_id, '2fa_code', true);
+
+    if ($code !== $stored_code) wp_die('error');
+
+    delete_user_meta($user_id, '2fa_code');
+    require_once ABSPATH . 'wp-admin/includes/user.php';
+    wp_delete_user($user_id);
+    wp_logout();
+    wp_die('success');
+}
+add_action('wp_ajax_frp_delete_user_account', 'frp_handle_delete_user_account');
+
+// Send 2FA code for account deletion (reuse existing function)
+function frp_send_2fa_code() {
+    $user_id = get_current_user_id();
+    $user = get_userdata($user_id);
+    if (!$user || !is_email($user->user_email)) wp_die('error');
+
+    $code = sprintf('%06d', mt_rand(0, 999999));
+    update_user_meta($user_id, '2fa_code', $code);
+
+    $subject = 'Your 2FA Code for Account Deletion';
+    $message = "Your 6-digit verification code is: $code";
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    $sent = wp_mail($user->user_email, $subject, $message, $headers);
+    wp_die($sent ? 'success' : 'error');
+}
+add_action('wp_ajax_send_2fa_code', 'frp_send_2fa_code');
