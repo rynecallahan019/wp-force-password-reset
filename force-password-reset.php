@@ -1292,12 +1292,12 @@ add_action('wp_head', function() {
 });
 
 // Set the 'force_password_reset' field to true by default for new users
-function set_default_force_password_reset($user_id) {
-    if (function_exists('update_field')) {
-        update_field('force_password_reset', true, 'user_' . $user_id);
-    }
-}
-add_action('user_register', 'set_default_force_password_reset');
+//function set_default_force_password_reset($user_id) {
+//    if (function_exists('update_field')) {
+//        update_field('force_password_reset', true, 'user_' . $user_id);
+//    }
+//}
+//dd_action('user_register', 'set_default_force_password_reset');
 
 //////////
 
@@ -1931,3 +1931,4 @@ function frp_send_2fa_code() {
     wp_die($sent ? 'success' : 'error');
 }
 add_action('wp_ajax_send_2fa_code', 'frp_send_2fa_code');
+
