@@ -632,7 +632,7 @@ function force_password_reset_modal() {
     border: 2px solid #e5e7eb;
     border-radius: 12px;
     font-size: 16px;
-    color: #111827;
+    color: #111827 !important;
     background: #ffffff;
     transition: all 0.2s ease;
     box-sizing: border-box;
@@ -753,7 +753,7 @@ function force_password_reset_modal() {
 /* Buttons */
 .frp-button-group {
     display: flex;
-    gap: 12px;
+    gap: 4px;
     margin-top: 32px;
 }
 
@@ -784,13 +784,11 @@ function force_password_reset_modal() {
     font-weight: 600 !important;
     font-size: 14px !important;
     transition: all 0.2s ease !important;
-    box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
 }
 
 .frp-button-primary:hover {
     background: var(--frp-accent-hover);
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px var(--frp-accent-shadow);
 }
 
 .frp-button-secondary {
@@ -802,14 +800,12 @@ function force_password_reset_modal() {
     font-weight: 600 !important;
     font-size: 14px !important;
     transition: all 0.2s ease !important;
-    box-shadow: 0 2px 4px <?php echo esc_attr($accent_color); ?> !important;
 }
 
 .frp-button-secondary:hover {
     background: <?php echo esc_attr($accent_color); ?> !important;
     border-color: <?php echo esc_attr($accent_color); ?> !important;
     transform: translateY(-1px) !important;
-    box-shadow: 0 4px 8px <?php echo esc_attr($accent_color); ?> !important;
 }
 
 .frp-button:disabled {
@@ -1291,13 +1287,13 @@ add_action('wp_head', function() {
     </script>';
 });
 
-// Set the 'force_password_reset' field to true by default for new users
-//function set_default_force_password_reset($user_id) {
-//    if (function_exists('update_field')) {
-//        update_field('force_password_reset', true, 'user_' . $user_id);
-//    }
-//}
-//dd_action('user_register', 'set_default_force_password_reset');
+// // Set the 'force_password_reset' field to true by default for new users
+// function set_default_force_password_reset($user_id) {
+//     if (function_exists('update_field')) {
+//         update_field('force_password_reset', true, 'user_' . $user_id);
+//     }
+// }
+// add_action('user_register', 'set_default_force_password_reset');
 
 //////////
 
@@ -1462,7 +1458,7 @@ function frp_account_deletion_shortcode() {
     font-size: 19.2px; /* 1.2rem = 19.2px */
     font-weight: 600;
     text-align: center;
-    color: var(--frp-text-primary);
+    color: var(--frp-text-primary) !important;
     background: #fff;
     transition: border-color 0.2s ease, background-color 0.2s ease;
 }
@@ -1476,6 +1472,7 @@ function frp_account_deletion_shortcode() {
 .frp-code-input.filled {
     border-color: #10b981;
     background: #f0fdf4;
+    color: var(--frp-text-primary) !important;
 }
 
 .frp-code-input.error {
@@ -1491,7 +1488,7 @@ function frp_account_deletion_shortcode() {
 
 .frp-button-group {
     display: flex;
-    gap: 16px; /* 1rem = 16px */
+    gap: 4px; /* 1rem = 16px */
     margin-top: 32px; /* 2rem = 32px */
 }
 
@@ -1502,13 +1499,12 @@ function frp_account_deletion_shortcode() {
     border-radius: 8px;
     font-size: 14px;
     line-height: 16px; /* 1em = 16px (based on font-size: 14px) */
-    font-weight: 400;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 2px solid var(--frp-accent);
     background: var(--frp-accent);
     color: #fff;
-    box-shadow: 0 2px 4px var(--frp-accent-shadow);
     text-align: center;
     display: inline-flex;
     align-items: center;
@@ -1521,13 +1517,12 @@ function frp_account_deletion_shortcode() {
     border-radius: 8px;
     font-size: 14px;
     line-height: 16px; /* 1em = 16px (based on font-size: 14px) */
-    font-weight: 400;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 2px solid var(--frp-accent-hover);
     background: var(--frp-accent-light);
     color: var(--frp-accent-hover);
-    box-shadow: 0 2px 4px var(--frp-accent-shadow);
     text-align: center;
     display: inline-flex;
     align-items: center;
@@ -1539,7 +1534,6 @@ function frp_account_deletion_shortcode() {
     background: var(--frp-accent);
     border-color: var(--frp-accent);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px var(--frp-accent-shadow);
 }
 
 .frp-button-secondary:hover {
@@ -1547,7 +1541,6 @@ function frp_account_deletion_shortcode() {
     color: var(--frp-accent-light);
     border-color: var(--frp-accent-hover);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px var(--frp-accent-shadow);
 }
 
 .frp-button:disabled {
@@ -1931,4 +1924,3 @@ function frp_send_2fa_code() {
     wp_die($sent ? 'success' : 'error');
 }
 add_action('wp_ajax_send_2fa_code', 'frp_send_2fa_code');
-
