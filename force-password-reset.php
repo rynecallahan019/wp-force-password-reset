@@ -4,7 +4,7 @@ Plugin Name: WP Force Password Reset
 Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 GitHub Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 Description: Adding a user field that when set to true, forces the user to reset their password the next time they log in.
-Version: 1.9.5
+Version: 1.9.6
 Author: Callabridge
 Author URI: https://callabridge.com/
 */
@@ -1381,13 +1381,13 @@ function frp_account_deletion_shortcode() {
 }
 
 .frp-modal-header {
-    padding: 32px 32px 16px; /* 2rem = 32px, 1rem = 16px */
+    padding: 32px 32px 16px;
     border-bottom: 1px solid var(--frp-border);
     text-align: center;
 }
 
 .frp-modal-title {
-    font-size: 24px; /* 1.5rem = 24px */
+    font-size: 24px;
     font-weight: 600;
     color: #23282d;
     margin: 0;
@@ -1396,20 +1396,20 @@ function frp_account_deletion_shortcode() {
 
 .frp-modal-description {
     color: var(--frp-text-secondary);
-    margin: 8px 0 0; /* 0.5rem = 8px */
-    font-size: 15.2px; /* 0.95rem = 15.2px */
+    margin: 8px 0 0;
+    font-size: 15.2px;
     line-height: 1.5;
 }
 
 .frp-modal-body {
-    padding: 32px; /* 2rem = 32px */
+    padding: 32px;
 }
 
 .frp-notification {
-    padding: 12px 16px; /* 0.75rem = 12px, 1rem = 16px */
+    padding: 12px 16px;
     border-radius: 6px;
-    margin-bottom: 24px; /* 1.5rem = 24px */
-    font-size: 14.4px; /* 0.9rem = 14.4px */
+    margin-bottom: 24px;
+    font-size: 14.4px;
     font-weight: 500;
     display: none;
     animation: slideDown 0.3s ease;
@@ -1433,12 +1433,12 @@ function frp_account_deletion_shortcode() {
 }
 
 .frp-form-group {
-    margin-bottom: 24px; /* 1.5rem = 24px */
+    margin-bottom: 24px;
 }
 
 .frp-form-label {
     display: block;
-    margin-bottom: 8px; /* 0.5rem = 8px */
+    margin-bottom: 8px;
     font-weight: 500;
     color: var(--frp-text-primary);
 }
@@ -1447,7 +1447,7 @@ function frp_account_deletion_shortcode() {
     display: flex;
     gap: 8px;
     justify-content: center;
-    margin: 16px 0; /* 1rem = 16px */
+    margin: 16px 0;
 }
 
 .frp-code-input {
@@ -1455,7 +1455,7 @@ function frp_account_deletion_shortcode() {
     height: 55px;
     border: 2px solid var(--frp-border);
     border-radius: 8px;
-    font-size: 19.2px; /* 1.2rem = 19.2px */
+    font-size: 19.2px;
     font-weight: 600;
     text-align: center;
     color: var(--frp-text-primary) !important;
@@ -1482,23 +1482,23 @@ function frp_account_deletion_shortcode() {
 
 .frp-error-message {
     color: #dc3545;
-    font-size: 13.6px; /* 0.85rem = 13.6px */
-    margin-top: 8px; /* 0.5rem = 8px */
+    font-size: 13.6px;
+    margin-top: 8px;
 }
 
 .frp-button-group {
     display: flex;
-    gap: 4px; /* 1rem = 16px */
-    margin-top: 32px; /* 2rem = 32px */
+    gap: 4px;
+    margin-top: 32px;
 }
 
 .frp-button,
 .frp-button-primary  {
     flex: 1;
-    padding: 12px 32px; /* 0.75rem = 12px, 2rem = 32px */
+    padding: 12px 32px;
     border-radius: 8px;
     font-size: 14px;
-    line-height: 16px; /* 1em = 16px (based on font-size: 14px) */
+    line-height: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1513,10 +1513,10 @@ function frp_account_deletion_shortcode() {
 
 .frp-button-secondary {
     flex: 1;
-    padding: 12px 32px; /* 0.75rem = 12px, 2rem = 32px */
+    padding: 12px 32px;
     border-radius: 8px;
     font-size: 14px;
-    line-height: 16px; /* 1em = 16px (based on font-size: 14px) */
+    line-height: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1575,18 +1575,18 @@ function frp_account_deletion_shortcode() {
 .frp-checkbox-group {
     display: flex;
     align-items: flex-start;
-    gap: 8px; /* 0.5rem = 8px */
-    margin: 16px 0; /* 1rem = 16px */
+    gap: 8px;
+    margin: 16px 0;
 }
 
 .frp-checkbox-group input[type="checkbox"] {
     margin: 0;
-    margin-top: 1.6px; /* 0.1rem = 1.6px */
+    margin-top: 1.6px;
 }
 
 .frp-checkbox-group label {
     margin: 0;
-    font-size: 14.4px; /* 0.9rem = 14.4px */
+    font-size: 14.4px;
     line-height: 1.4;
     color: #444;
 }
@@ -1598,15 +1598,15 @@ function frp_account_deletion_shortcode() {
     }
 
     .frp-modal-header {
-        padding: 24px 24px 16px; /* 1.5rem = 24px, 1rem = 16px */
+        padding: 24px 24px 16px;
     }
 
     .frp-modal-body {
-        padding: 24px; /* 1.5rem = 24px */
+        padding: 24px;
     }
 
     .frp-modal-title {
-        font-size: 20px; /* 1.25rem = 20px */
+        font-size: 20px;
     }
 
     .frp-button-group {
@@ -1614,13 +1614,13 @@ function frp_account_deletion_shortcode() {
     }
 
     .frp-button {
-        padding: 12px; /* 0.75rem = 12px */
+        padding: 12px;
     }
 
     .frp-code-input {
         width: 40px;
         height: 50px;
-        font-size: 16px; /* 1rem = 16px */
+        font-size: 16px;
     }
 }
 </style>
@@ -1640,7 +1640,7 @@ function frp_account_deletion_shortcode() {
                 <div id="frpDelete2faStep" class="frp-step">
                     <form id="frpDelete2faForm">
                         <div class="frp-form-group">
-                            <label for="frpDelete2faCode" class="frp-form-label">Enter 6-digit code that was sent to the email on file</label>
+                            <label class="frp-form-label">Enter 6-digit code that was sent to the email on file</label>
                             <div class="frp-code-input-container">
                                 <input type="text" class="frp-code-input" maxlength="1" data-index="0">
                                 <input type="text" class="frp-code-input" maxlength="1" data-index="1">
@@ -1669,9 +1669,11 @@ function frp_account_deletion_shortcode() {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const modalOverlay = document.getElementById('frpDeleteModalOverlay');
-            const modal = document.getElementById('frpDeleteModal');
             const notification = document.getElementById('frpDeleteNotification');
-            const codeInputs = document.querySelectorAll('.frp-code-input');
+            const deleteBtn = document.getElementById('frpDeleteAccountBtn');
+            if (!modalOverlay || !deleteBtn) return;
+
+            const codeInputs = modalOverlay.querySelectorAll('.frp-code-input');
             
             function showDeleteNotification(message, isSuccess) {
                 notification.className = 'frp-notification ' + (isSuccess ? 'success' : 'error');
@@ -1709,7 +1711,6 @@ function frp_account_deletion_shortcode() {
                 input.addEventListener('input', function(e) {
                     const value = e.target.value;
                     
-                    // Only allow numbers
                     if (!/^\d*$/.test(value)) {
                         e.target.value = '';
                         return;
@@ -1718,8 +1719,6 @@ function frp_account_deletion_shortcode() {
                     if (value) {
                         e.target.classList.add('filled');
                         e.target.classList.remove('error');
-                        
-                        // Move to next input
                         if (index < codeInputs.length - 1) {
                             codeInputs[index + 1].focus();
                         }
@@ -1729,14 +1728,12 @@ function frp_account_deletion_shortcode() {
                 });
                 
                 input.addEventListener('keydown', function(e) {
-                    // Handle backspace
                     if (e.key === 'Backspace' && !e.target.value && index > 0) {
                         codeInputs[index - 1].focus();
                         codeInputs[index - 1].value = '';
                         codeInputs[index - 1].classList.remove('filled');
                     }
                     
-                    // Handle paste
                     if (e.key === 'v' && (e.ctrlKey || e.metaKey)) {
                         e.preventDefault();
                         navigator.clipboard.readText().then(text => {
@@ -1750,13 +1747,11 @@ function frp_account_deletion_shortcode() {
                                 }
                             });
                             if (numbers.length > 0) {
-                                const lastFilledIndex = Math.min(numbers.length - 1, 5);
-                                codeInputs[lastFilledIndex].focus();
+                                codeInputs[Math.min(numbers.length - 1, 5)].focus();
                             }
                         });
                     }
                     
-                    // Handle arrow keys
                     if (e.key === 'ArrowLeft' && index > 0) {
                         codeInputs[index - 1].focus();
                     }
@@ -1766,11 +1761,83 @@ function frp_account_deletion_shortcode() {
                 });
             });
 
+            // Send 2FA code
             function sendDelete2FACode() {
                 const sendBtn = document.getElementById('frpDeleteSend2faCode');
                 setButtonLoading(sendBtn, true);
                 
-                                fetch(ajaxurl, {
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    credentials: 'same-origin',
+                    body: 'action=send_2fa_code'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    setButtonLoading(sendBtn, false);
+                    if (data.trim() === 'success') {
+                        showDeleteNotification('A 6-digit code has been sent to your email. Check spam folder if you don\'t see it.', true);
+                    } else {
+                        showDeleteNotification('Failed to send email. Please try again.', false);
+                    }
+                })
+                .catch(() => {
+                    setButtonLoading(sendBtn, false);
+                    showDeleteNotification('An error occurred. Please try again.', false);
+                });
+            }
+
+            // Open modal and send code
+            deleteBtn.addEventListener('click', function() {
+                clearCodeInputs();
+                document.getElementById('frpAgreeDelete').checked = false;
+                document.getElementById('frpDelete2faCodeError').textContent = '';
+                notification.style.display = 'none';
+                
+                modalOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    if (codeInputs.length > 0) codeInputs[0].focus();
+                    sendDelete2FACode();
+                }, 100);
+            });
+
+            // Cancel
+            document.getElementById('frpDeleteCancel').addEventListener('click', function() {
+                modalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+
+            // Send new code
+            document.getElementById('frpDeleteSend2faCode').addEventListener('click', sendDelete2FACode);
+
+            // Submit deletion
+            document.getElementById('frpDelete2faForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const code = getCodeValue();
+                const agree = document.getElementById('frpAgreeDelete').checked;
+                const submitBtn = this.querySelector('button[type="submit"]');
+                
+                codeInputs.forEach(input => input.classList.remove('error'));
+                document.getElementById('frpDelete2faCodeError').textContent = '';
+                
+                if (!agree) {
+                    showDeleteNotification('You must confirm that you understand this action is permanent.', false);
+                    return;
+                }
+                
+                if (code.length !== 6) {
+                    codeInputs.forEach(input => input.classList.add('error'));
+                    document.getElementById('frpDelete2faCodeError').textContent = 'Please enter all 6 digits';
+                    return;
+                }
+                
+                setButtonLoading(submitBtn, true);
+                
+                fetch(ajaxurl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -1805,91 +1872,9 @@ function frp_account_deletion_shortcode() {
                     setButtonLoading(submitBtn, false);
                     showDeleteNotification('An error occurred. Please try again.', false);
                 });
-
-            // Show modal and send 2FA code
-            document.getElementById('frpDeleteAccountBtn').addEventListener('click', function() {
-                // Clear any previous form data
-                clearCodeInputs();
-                document.getElementById('frpAgreeDelete').checked = false;
-                document.getElementById('frpDelete2faCodeError').textContent = '';
-                document.getElementById('frpDeleteNotification').style.display = 'none';
-                
-                // Show modal with animation
-                modalOverlay.classList.add('show');
-                document.body.style.overflow = 'hidden';
-                
-                // Focus first input and send code
-                setTimeout(() => {
-                    if (codeInputs.length > 0) {
-                        codeInputs[0].focus();
-                    }
-                    sendDelete2FACode();
-                }, 100);
             });
 
-            // Cancel button
-            document.getElementById('frpDeleteCancel').addEventListener('click', function() {
-                modalOverlay.classList.remove('show');
-                document.body.style.overflow = '';
-            });
-
-            // Send new code button
-            document.getElementById('frpDeleteSend2faCode').addEventListener('click', sendDelete2FACode);
-
-            // Handle form submission
-            document.getElementById('frpDelete2faForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const code = getCodeValue();
-                const agree = document.getElementById('frpAgreeDelete').checked;
-                const submitBtn = this.querySelector('button[type="submit"]');
-                
-                // Clear previous errors
-                codeInputs.forEach(input => input.classList.remove('error'));
-                document.getElementById('frpDelete2faCodeError').textContent = '';
-                
-                if (!agree) {
-                    showDeleteNotification('You must confirm that you understand this action is permanent.', false);
-                    return;
-                }
-                
-                if (code.length !== 6) {
-                    codeInputs.forEach(input => input.classList.add('error'));
-                    document.getElementById('frpDelete2faCodeError').textContent = 'Please enter all 6 digits';
-                    return;
-                }
-                
-                setButtonLoading(submitBtn, true);
-                
-                fetch(ajaxurl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'action=frp_delete_user_account&code=' + encodeURIComponent(code)
-                })
-                .then(response => response.text())
-                .then(data => {
-                    setButtonLoading(submitBtn, false);
-                    if (data === 'success') {
-                        showDeleteNotification('Account deleted successfully. Redirecting...', true);
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 2000);
-                    } else {
-                        codeInputs.forEach(input => input.classList.add('error'));
-                        showDeleteNotification('Verification failed or error occurred. Please try again.', false);
-                        setTimeout(() => {
-                            clearCodeInputs();
-                        }, 1000);
-                    }
-                })
-                .catch(() => {
-                    setButtonLoading(submitBtn, false);
-                    showDeleteNotification('An error occurred. Please try again.', false);
-                });
-            });
-
-            // Close modal when clicking outside
+            // Close when clicking outside
             modalOverlay.addEventListener('click', function(e) {
                 if (e.target === modalOverlay) {
                     modalOverlay.classList.remove('show');
