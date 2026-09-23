@@ -4,7 +4,7 @@ Plugin Name: WP Force Password Reset
 Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 GitHub Plugin URI: https://github.com/rynecallahan019/wp-force-password-reset
 Description: Adding a user field that when set to true, forces the user to reset their password the next time they log in.
-Version: 1.9.4
+Version: 1.9.5
 Author: Callabridge
 Author URI: https://callabridge.com/
 */
@@ -1770,27 +1770,41 @@ function frp_account_deletion_shortcode() {
                 const sendBtn = document.getElementById('frpDeleteSend2faCode');
                 setButtonLoading(sendBtn, true);
                 
-                fetch(ajaxurl, {
+                                fetch(ajaxurl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: 'action=send_2fa_code'
+                    credentials: 'same-origin',
+                    body: 'action=frp_delete_user_account&code=' + encodeURIComponent(code)
                 })
                 .then(response => response.text())
-                .then(data => {
-                    setButtonLoading(sendBtn, false);
-                    if (data === 'success') {
-                        showDeleteNotification('A 6-digit code has been sent to your email. Check spam folder if you don\'t see it.', true);
+                .then(text => {
+                    setButtonLoading(submitBtn, false);
+                    let ok = false;
+                    try {
+                        ok = JSON.parse(text).success === true;
+                    } catch (err) {
+                        ok = text.trim() === 'success';
+                    }
+
+                    if (ok) {
+                        showDeleteNotification('Account deleted successfully. Redirecting...', true);
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 2000);
                     } else {
-                        showDeleteNotification('Failed to send email. Please try again.', false);
+                        codeInputs.forEach(input => input.classList.add('error'));
+                        showDeleteNotification('Verification failed or error occurred. Please try again.', false);
+                        setTimeout(() => {
+                            clearCodeInputs();
+                        }, 1000);
                     }
                 })
                 .catch(() => {
-                    setButtonLoading(sendBtn, false);
+                    setButtonLoading(submitBtn, false);
                     showDeleteNotification('An error occurred. Please try again.', false);
                 });
-            }
 
             // Show modal and send 2FA code
             document.getElementById('frpDeleteAccountBtn').addEventListener('click', function() {
@@ -1891,19 +1905,38 @@ add_shortcode('frp_delete_account', 'frp_account_deletion_shortcode');
 
 // Handle deletion AJAX
 function frp_handle_delete_user_account() {
-    $user_id = get_current_user_id();
-    if (!$user_id) wp_die('error');
+    ob_start(); // catch any stray output from deletion hooks
 
-    $code = sanitize_text_field($_POST['code'] ?? '');
+    $user_id = get_current_user_id();
+    if (!$user_id) {
+        ob_end_clean();
+        wp_send_json_error('not_logged_in');
+    }
+
+    $code        = sanitize_text_field($_POST['code'] ?? '');
     $stored_code = get_user_meta($user_id, '2fa_code', true);
 
-    if ($code !== $stored_code) wp_die('error');
+    if (empty($stored_code) || $code !== $stored_code) {
+        ob_end_clean();
+        wp_send_json_error('invalid_code');
+    }
 
     delete_user_meta($user_id, '2fa_code');
+
+    // End session without firing wp_logout (which other plugins hook to redirect/exit)
+    wp_destroy_current_session();
+    wp_clear_auth_cookie();
+    wp_set_current_user(0);
+
     require_once ABSPATH . 'wp-admin/includes/user.php';
-    wp_delete_user($user_id);
-    wp_logout();
-    wp_die('success');
+    $deleted = wp_delete_user($user_id);
+
+    ob_end_clean();
+
+    if ($deleted) {
+        wp_send_json_success();
+    }
+    wp_send_json_error('delete_failed');
 }
 add_action('wp_ajax_frp_delete_user_account', 'frp_handle_delete_user_account');
 
